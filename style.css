@@ -3,9 +3,15 @@
 	width: 75px;
 	height: 75px;
 	display: inline-block;
-	font-size: 22px;
+	font-size: 20px;
 	text-align: center;
 	cursor: pointer;
+}
+
+body {
+	margin: 0;
+	font-family: "Roboto, Arial";
+	font-size: 26px;
 }
 
 .free {
@@ -13,7 +19,7 @@
 }
 
 .square>div {
-	padding-top: 24px;
+	padding-top: 22px;
 }
 
 .row {
@@ -22,12 +28,56 @@
 	width: auto;
 }
 
-.wrapper {
-	margin: 100px;
+#game {
+	margin: 300px auto;
 	width: 400px;
+	height: 50vh;
+}
+
+#contact {
+	width: 100%;
+    height: 50vh;
+    text-align: center;
 }
 
 .button {
 	display: inline-block;
 	margin: 0 20px;
+}
+
+#score {
+	margin-bottom: 16px;
+	font-weight: bold;
+}
+
+nav {
+	height: 55px;
+	position: fixed;
+	top: 0;
+    width: 100%;
+	background-color: #8d9fe0;
+}
+
+ul {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	margin: 0;
+}
+ul li{
+	line-height: 50px;
+	margin-right: 100px;
+	list-style: none;
+}
+
+li a {
+	text-decoration: none;
+}
+
+#socials {
+	margin-top: 50px;
+}
+
+a img {
+	width: 70px;
 }

@@ -6,35 +6,61 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="wrapper" onmousedown="return false" onselectstart="return false" >
-	<div id="score">
-		moves: <span id="moves">0</span>
+	<nav>
+		<ul>
+			<li><a href="">Game</a></li>
+			<li><a href="#contact">Contact</a></li>
+		</ul>
+	</nav>
+	<div id="game" onselectstart="return false" >
+		<div id="score">
+			Moves: <span id="moves">0</span>
+		</div>
+		<div class="row">
+			<div class="square 1_1"></div>
+			<div class="square 1_2"></div>
+			<div class="square 1_3"></div>
+			<div class="square 1_4"></div>
+		</div>
+		<div class="row">
+			<div class="square 2_1"></div>
+			<div class="square 2_2"></div>
+			<div class="square 2_3"></div>
+			<div class="square 2_4"></div>
+		</div>
+		<div class="row">
+			<div class="square 3_1"></div>
+			<div class="square 3_2"></div>
+			<div class="square 3_3"></div>
+			<div class="square 3_4"></div>
+		</div>
+		<div class="row">
+			<div class="square 4_1"></div>
+			<div class="square 4_2"></div>
+			<div class="square 4_3"></div>
+			<div class="square 4_4 free"><div>Free</div></div>
+		</div>
 	</div>
-	<div class="row">
-		<div class="square 1_1"></div>
-		<div class="square 1_2"></div>
-		<div class="square 1_3"></div>
-		<div class="square 1_4"></div>
+	<div id="contact">
+		<h2>Contact me</h2>
+		<ul id="socials">
+			<li>
+				<a target="_blank" href="https://github.com/gdivakov">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Font_Awesome_5_brands_github-square.svg" alt="github">
+				</a>
+			</li>
+			<li>
+				<a target="_blank" href="https://www.linkedin.com/in/gdivakov/">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Font_Awesome_5_brands_linkedin.svg" alt="linkedin">
+				</a>
+			</li>
+			<li>
+				<a target="_blank" href="https://t.me/gdivakov">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Font_Awesome_5_brands_telegram.svg" alt="telegram" />
+				</a>
+			</li>
+		</ul>
 	</div>
-	<div class="row">
-		<div class="square 2_1"></div>
-		<div class="square 2_2"></div>
-		<div class="square 2_3"></div>
-		<div class="square 2_4"></div>
-	</div>
-	<div class="row">
-		<div class="square 3_1"></div>
-		<div class="square 3_2"></div>
-		<div class="square 3_3"></div>
-		<div class="square 3_4"></div>
-	</div>
-	<div class="row">
-		<div class="square 4_1"></div>
-		<div class="square 4_2"></div>
-		<div class="square 4_3"></div>
-		<div class="square 4_4 free"><div>Free</div></div>
-	</div>
-</div>
-<script src="script.js"></script>
+	<script src="script.js"></script>
 </body>
 </html>
