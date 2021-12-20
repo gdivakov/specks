@@ -1,0 +1,33 @@
+.square {
+	background: rgba(93, 118, 211, .7);
+	width: 75px;
+	height: 75px;
+	display: inline-block;
+	font-size: 22px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.free {
+	color: rgba(93, 118, 211, 0);
+}
+
+.square>div {
+	padding-top: 24px;
+}
+
+.row {
+	height: 76px;
+	margin: 3px;
+	width: auto;
+}
+
+.wrapper {
+	margin: 100px;
+	width: 400px;
+}
+
+.button {
+	display: inline-block;
+	margin: 0 20px;
+}
