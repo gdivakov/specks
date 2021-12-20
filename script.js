@@ -1,120 +1,142 @@
-function Specks() {
-	var squares = document.getElementsByClassName('square'),
-		_moves = document.querySelector('#moves');
-		_index = [],
-		_isWin = false,
-		_this = this;
+class Specks {
+	constructor() {
+		this.squares = document.getElementsByClassName('square');
+		this.moves = document.querySelector('#moves');
+		this.numbers = [];
+		this.isWin = false;
 
-	this.generateSpeckPlace = function() {
-		_this.generateIndex();
-		// generate for each squares except the last one
-		for (var i = 0; i < squares.length - 1; i++) {
-			var num = _this.createNewSpeck(_index[i]);
-			squares[i].appendChild(num);
+		this.prepareMatrix();
+		this.startListeners();
+	}
+
+	prepareMatrix() {
+		this.generateNumbers();
+
+		for (let i = 0; i < this.squares.length - 1; i++) {
+			const num = this.createNewSpeck(this.numbers[i]);
+			this.squares[i].appendChild(num);
 		}
 	}
 
-	this.generateIndex = function() {
-		for (var i = 0; i < 15; i++) {
-			_index.push(i + 1);
+	generateNumbers() {
+		let i = 0
+
+		while (i < 15) {
+			this.numbers.push(++i);
 		}
-		_index.sort(compareRandom);
+
+		// Randomize for each new session
+		this.numbers.sort(() => Math.random() - 0.5);
 	}
 
-	this.createNewSpeck = function(index) {
-		var newNum = document.createElement('div');
-		newNum.classList.add('number');
-		newNum.classList.add(index);
-		newNum.innerHTML = index;
+	createNewSpeck(index) {
+		const newCell = document.createElement('div');
+		newCell.classList.add('number');
+		newCell.classList.add(index);
+		newCell.innerHTML = index;
 
-		return newNum;
+		return newCell;
 	}
 
-	this.searchFreeSpace = function(element) {
-		var child = element.firstChild,
-			elemIndex = element.classList[1],
-			row = elemIndex[0],
-			neighbElems = [],
-			column = elemIndex[2],
-			freeElem;
+	move(element) {
+		let cell = element.firstChild;
+		let position = element.classList[1];
+		let freeCell = this.getNextCell(position);
 
-			switch (+row) {
-				case (3):
-					neighbElems.push((+row - 1) + "_" + column);
-					neighbElems.push((+row + 1) + "_" + column);
-					break;
-				case (2):
-					neighbElems.push((+row - 1) + "_" + column);
-					neighbElems.push((+row + 1) + "_" + column);
-					break;				
-				case (1):
-					neighbElems.push((+row + 1) + "_" + column);
-					break;
-				case (4):
-					neighbElems.push((+row - 1) + "_" + column);
-					break;
+		if (!freeCell) {
+			return
+		}
+
+		this.replaceElems(cell, freeCell);
+	}
+
+	getNextCell(position) {
+		let [ row, column ] = position.split("_").map(value => +value);
+		let neighbElems = [];
+
+		// Find candidates
+		switch (row) {
+			case (1):
+				neighbElems.push(`${row + 1}_${column}`);
+				break;
+			case (2):
+				neighbElems.push(`${row - 1}_${column}`);
+				neighbElems.push(`${row + 1}_${column}`);
+				break;
+			case (3):
+				neighbElems.push(`${row - 1}_${column}`);
+				neighbElems.push(`${row + 1}_${column}`);
+				break;
+			case (4):
+				neighbElems.push(`${row - 1}_${column}`);
+				break;
+		}
+
+		switch (column) {
+			case (1):
+				neighbElems.push(`${row}_${column + 1}`);
+				break;
+			case (2):
+				neighbElems.push(`${row}_${column + 1}`);
+				neighbElems.push(`${row}_${column - 1}`);
+				break;
+			case (3):
+				neighbElems.push(`${row}_${column + 1}`);
+				neighbElems.push(`${row}_${column - 1}`);
+				break;
+			case (4):
+				neighbElems.push(`${row}_${column - 1}`);
+				break;
+		}
+
+		for (let i = 0; i < neighbElems.length; i++) {
+			const possiblyFree = document.getElementsByClassName(neighbElems[i])[0];
+
+			if (!possiblyFree.classList.contains('free')) {
+				continue;
 			}
 
-			switch (+column) {
-				case (3):
-					neighbElems.push(+row + "_" + (+column + 1));
-					neighbElems.push(+row + "_" + (+column - 1));
-					break;
-				case (2):
-					neighbElems.push(+row + "_" + (+column + 1));
-					neighbElems.push(+row + "_" + (+column - 1));
-					break;						
-				case (1):
-					neighbElems.push(+row + "_" + (+column + 1));
-					break;
-				case (4):
-					neighbElems.push(+row + "_" + (+column - 1));
-					break;
-			}			
+			return possiblyFree.firstChild;
+		}
 
-			for (var i = 0; i < neighbElems.length; i++) {
-				var possiblyFree = document.getElementsByClassName(neighbElems[i])[0];
-				//find free elem
-				if (possiblyFree.classList.contains('free')) {
-					freeElem = possiblyFree;
-					_this.replaceElems(child, freeElem.firstChild);
-				}
-			}
+		return null
 	}
 
-	this.replaceElems = function(el, freeEl) {
-		var parentEl = el.parentElement,
-			parentFreeEl = freeEl.parentElement;
+	replaceElems (prevCell, nextCell) {
+		const parentPrev = prevCell.parentElement;
+		const parentNext = nextCell.parentElement;
 
-		parentEl.replaceChild(freeEl, el);
-		parentFreeEl.appendChild(el);
-		parentFreeEl.classList.remove('free');
-		parentEl.classList.add('free');
+		parentPrev.replaceChild(nextCell, prevCell);
+		parentPrev.classList.add('free');
 
-		_this.refreshMoves();
-		_this.checkWin();
+		parentNext.appendChild(prevCell);
+		parentNext.classList.remove('free');
+
+		moves.innerHTML++;
+		this.checkWin();
 	}
 
-	//random comparing for _index
-	function compareRandom(a, b) {
-		return Math.random() - 0.5;
-	}
+	checkWin() {
+		const squares = document.getElementsByClassName('square');
 
-	this.checkWin = function() {
-		var _elems = document.getElementsByClassName('square');
-
-		for (var i = 0; i < 15; i++) {
-			if (_elems[i].firstChild.innerHTML != (i + 1)) {
+		for (let i = 0; i < 15; i++) {
+			if (squares[i].firstChild.innerHTML != (i + 1)) {
 				return;
 			}
 		}
-		_isWin = true;
-		alert("Win! Congratulations, you made " + _moves.innerHTML + " moves");
-		_this.insertRestartButton();
+		this.isWin = true;
+
+		alert("Win! Congratulations, you made " + this.moves.innerHTML + " moves");
+		this.insertRestartButton();
 	}
 
-	this.insertRestartButton = function() {
-		button = document.createElement("input");
+	insertRestartButton() {
+		const hasButton = document.querySelector(".button");
+		if (hasButton) {
+			return;
+		}
+
+		const button = document.createElement("input");
 		button.setAttribute("type", "button");
 		button.setAttribute("value", "again");
 		button.setAttribute("onclick", "location.reload(true);");
@@ -123,32 +145,19 @@ function Specks() {
 		document.getElementById("score").appendChild(button);
 	}
 
-	this.refreshMoves = function() {
-		_moves.innerHTML = +_moves.innerHTML + 1;
-	}
+	startListeners() {
+		const handleClick = ({ target, stopPropagation }) => {
+			const square = target.closest('.square');
 
-
-	document.addEventListener('mousedown', function (e) {
-		if (_isWin) return;
-
-		var elem = e.target;
-
-		if (!elem.classList.contains('square')) {
-			if (elem.parentElement.classList.contains('square')) {
-				elem = elem.parentElement;
-			} else {
-				return;
+			if (this.isWin || !square || square.classList.contains('free')) {
+				return
 			}
+
+			this.move(square);
 		}
 
-		if (!elem.firstChild.classList.contains('number')) {
-			e.stopPropagation();
-		} else {
-			_this.searchFreeSpace(elem);
-		}
-	});	
-
+		document.addEventListener('mousedown', handleClick);
+	}
 }
 
-var specks = new Specks;
-specks.generateSpeckPlace();
+const game = new Specks();
