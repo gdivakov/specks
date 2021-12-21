@@ -131,11 +131,6 @@ class Specks {
 	}
 
 	insertRestartButton() {
-		const hasButton = document.querySelector(".button");
-		if (hasButton) {
-			return;
-		}
-
 		const button = document.createElement("input");
 		button.setAttribute("type", "button");
 		button.setAttribute("value", "again");
@@ -146,7 +141,7 @@ class Specks {
 	}
 
 	startListeners() {
-		const handleClick = ({ target, stopPropagation }) => {
+		const handleClick = ({ target }) => {
 			const square = target.closest('.square');
 
 			if (this.isWin || !square || square.classList.contains('free')) {

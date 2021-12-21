@@ -56,6 +56,7 @@ nav {
 	top: 0;
     width: 100%;
 	background-color: #8d9fe0;
+	z-index: 999;
 }
 
 ul {
@@ -64,6 +65,7 @@ ul {
 	justify-content: center;
 	margin: 0;
 }
+
 ul li{
 	line-height: 50px;
 	margin-right: 100px;
@@ -80,4 +82,25 @@ li a {
 
 a img {
 	width: 70px;
+}
+
+#desc {
+    position: absolute;
+    top: 260px;
+    right: 100px;
+    width: 400px;
+}
+
+#info {
+	text-align: center;
+}
+
+.info-icon {
+	width: 50px;
+}
+
+p {
+	margin: 0;
+	text-indent: 30px;
+	font-size: 24px;
 }
